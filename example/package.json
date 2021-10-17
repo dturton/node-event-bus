@@ -1,0 +1,13 @@
+{
+  "name": "event-bus-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "David Turton <dturton@etrivo.com> (https://etrivo.com/)",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}

@@ -1,8 +1,10 @@
 import BaseConnector from "./BaseConnector";
 import EventConfiguration from "./EventConfiguration";
 
+type EventType = "ORDER_CANCELED" | "ORDER_CANCELED_IN_SHOPIFY";
+
 export interface CustomEventConnectorEventOptions {
-  channel: string;
+  event: EventType;
 }
 
 export type Handler = {
@@ -20,7 +22,7 @@ export default class CustomEventConnector extends BaseConnector<
     eventId?: string
   ): EventConfiguration {
     if (!eventId) {
-      eventId = `CustomEvent/${options.channel}/${this.id}`;
+      eventId = `CustomEvent/${options.event}/${this.id}`;
     }
     const event = new EventConfiguration(eventId, this, options);
     this.eventConfigurations[event.id] = event;
@@ -29,9 +31,9 @@ export default class CustomEventConnector extends BaseConnector<
     return event;
   }
 
-  async fire(channel: string, payload: unknown): Promise<void> {
+  async dispatch(event: string, payload: unknown): Promise<void> {
     const eventsToExecute = Object.values(this.eventConfigurations).filter(
-      (e) => e.options.channel === channel
+      (e) => e.options.event === event
     );
 
     for (const event of eventsToExecute) {
