@@ -1,10 +1,8 @@
 import BaseConnector from "./BaseConnector";
 import EventConfiguration from "./EventConfiguration";
 
-type EventType = "ORDER_CANCELED" | "ORDER_CANCELED_IN_SHOPIFY";
-
 export interface CustomEventConnectorEventOptions {
-  event: EventType;
+  event: string;
 }
 
 export type Handler = {
@@ -22,7 +20,7 @@ export default class CustomEventConnector extends BaseConnector<
     eventId?: string
   ): EventConfiguration {
     if (!eventId) {
-      eventId = `CustomEvent/${options.event}/${this.id}`;
+      eventId = `Event/${options.event}/${this.id}`;
     }
     const event = new EventConfiguration(eventId, this, options);
     this.eventConfigurations[event.id] = event;
