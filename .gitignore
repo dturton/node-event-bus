@@ -3,3 +3,6 @@ dist
 .env
 .DS_Store
 /logs
+/example/index.js
+/example/logs/combined.log
+/example/logs/error.log
