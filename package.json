@@ -1,6 +1,6 @@
 {
   "name": "@dturton/node-event-bus",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Node.js event bus",
   "main": "dist/index.js",
   "scripts": {
