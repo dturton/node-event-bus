@@ -1,5 +1,4 @@
 import axios from "axios";
-import e from "express";
 
 import { TeamsChannelWebhook } from "../types";
 
