@@ -125,12 +125,6 @@ export default class EventBus {
     if (Object.keys(this.httpDelegates).length) {
       const webserver = this.prepareWebServer();
 
-      if (process.env.EVENTBUS) {
-        webserver.use(process.env.EVENTBUS, (req, res) =>
-          res.status(200).send({ ok: true, uptime: process.uptime() })
-        );
-      }
-
       const specificPaths = Object.keys(this.httpDelegates).filter(
         (p) => !p.includes(":")
       );
@@ -145,23 +139,14 @@ export default class EventBus {
         webserver.all(path, httpMultiplexer.handle.bind(httpMultiplexer));
       });
 
-      webserver.all("/webhooks/*", (req, res) => {
+      webserver.all("/events/webhooks/*", (req, res) => {
         const errorMessage = `Webhook not registered`;
         this.logger.info(`${errorMessage} for ${req.method} ${req.url}`);
-        return res.status(501).send(errorMessage);
-      });
-      webserver.all("*", (req, res) => {
-        const errorMessage = `No handler registered for ${req.method} ${req.url}`;
-        this.logger.info(errorMessage);
         return res.status(501).send(errorMessage);
       });
     }
 
     callback && callback();
-  }
-
-  stopWebServer(): void {
-    this.httpServer?.close();
   }
 
   async handleEvent(
