@@ -6,3 +6,4 @@ dist
 /example/index.js
 /example/logs/combined.log
 /example/logs/error.log
+/.npmrc
