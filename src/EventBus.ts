@@ -115,9 +115,7 @@ export default class EventBus {
     return this;
   }
 
-  start(port?: number, callback?: () => void): void {
-    this.port = port || this.port;
-
+  start(callback?: () => void): void {
     // Start all connectors
     Object.values(this.registry.connectors).forEach((connector) =>
       connector.start()
@@ -157,10 +155,6 @@ export default class EventBus {
         this.logger.info(errorMessage);
         return res.status(501).send(errorMessage);
       });
-
-      this.httpServer = webserver.listen(this.port, () => {
-        this.logger.info("EventBus Web server listening on port", this.port);
-      });
     }
 
     callback && callback();
@@ -168,13 +162,6 @@ export default class EventBus {
 
   stopWebServer(): void {
     this.httpServer?.close();
-  }
-
-  restart(port?: number): void {
-    this.stopWebServer();
-    this.start(port, () => {
-      this.logger.info("EventBus Restarted");
-    });
   }
 
   async handleEvent(
