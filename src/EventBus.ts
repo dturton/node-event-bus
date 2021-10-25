@@ -36,9 +36,13 @@ export default class EventBus {
   ];
   logger: Logger;
 
-  constructor(loggerOptions?: LoggerOptions) {
+  constructor(server?: Express, loggerOptions?: LoggerOptions) {
     this.port = parseInt(<string>process.env.PORT, 10) || 8000;
-    this.registry = { connectors: {}, handlers: {}, common: {} };
+    this.registry = {
+      connectors: {},
+      handlers: {},
+      common: { webserver: server },
+    };
     this.logger = createLogger(loggerOptions);
     this.httpDelegates = {};
     this.logger.info("EventBus Initializing");

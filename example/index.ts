@@ -1,6 +1,7 @@
+import Express from "express";
 import { CustomEventConnector, EventBus, HttpConnector } from "../src";
 
-const bus = new EventBus();
+const bus = new EventBus(Express());
 
 const emiter = new CustomEventConnector(bus);
 const httpConnector = new HttpConnector(bus);
